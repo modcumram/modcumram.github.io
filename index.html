@@ -1,0 +1,299 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Monitor Server Room 2017</TITLE>
+<META NAME="Generator" CONTENT="EditPlus">
+<META NAME="Author" CONTENT="">
+<META NAME="Keywords" CONTENT="">
+<META NAME="Description" CONTENT="">
+</HEAD>
+<style type="text/css">
+  body { background-color: #ffffff; }
+</style>
+		
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script> 
+<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+<script type='text/javascript'>
+
+	var chart; 
+	var charts;
+	var data;
+
+      	google.load('visualization', '1', {packages:['gauge']});
+      	google.setOnLoadCallback(initChart);
+
+	function displayData(point) {
+	
+		data.setValue(0, 0, 'Temp');
+		data.setValue(0, 1, point);
+		chart.draw(data, options);
+	
+	}
+
+	function loadData() {
+	
+		// variable for the data point
+		var p;
+	
+		$.getJSON('https://api.thingspeak.com/channels/227532/feed/last.json?callback=?', function(data) {
+		
+		// get the data point
+		p = data.field1;
+	
+		if (p)
+		{
+			//p = Math.round((p / 1023) * 100);
+			displayData(p);
+		}
+	
+		});
+
+		
+	}
+
+	function initChart() {
+
+		data = new google.visualization.DataTable();
+		data.addColumn('string', 'Label');
+		data.addColumn('number', 'Value');
+		data.addRows(1);
+	        
+	        chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+	        options = {width: 220, height: 220, redFrom: 40, redTo: 100,
+	            yellowFrom:30, yellowTo: 40, minorTicks: 5};
+	
+			 
+		loadData();
+
+		setInterval('loadData()', 15000);
+	        
+	}
+
+	
+
+</script>
+<BODY>
+<!--<h3 align="center">Internet Bandwidth Usage & Temperature Room</h3> -->
+<!-- <h4 align="center"> ( Deploy via Arduino ESP8266 DH11 & Cloud Thingspeak & Line notify & Google gauge & python & shellscript) </h4> -->
+<table align="center">
+<tr algin="center">
+ <td align="center"><iframe width="450" height="340" style="border: 1px solid #cccccc;" src="http://202.122.40.213/TEMP/bandwidth.html"></iframe></td> 
+ <td align="center"> <iframe width="450" height="340" style="border: 1px solid #cccccc;" src="http://202.122.40.213/TEMP/user.html"></iframe></td> 
+ 
+  </tr>
+ </table>
+
+<!-- <h3 align="center"> Tempearture Server Room</h3> -->
+<!-- <h4 align="center"> ( Deploy via Arduino ESP8266 DH11 & Cloud Thingspeak & Line notify & Google gauge & python & shellscript) </h4>  -->
+<table align="center">
+<tr algin="center">
+ <td align="center"> <iframe width="450" height="340" style="border: 1px solid #cccccc;" src="http://202.122.40.213/TEMP/dr.html"></iframe></td>
+ <td align="center"> <iframe width="450" height="340" style="border: 1px solid #cccccc;" src="http://202.122.40.213/TEMP/sr.html"></iframe></td>
+
+  <!-- <td align="center"> <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="http://202.122.40.213/TEMP/hdr.html"></iframe></td> -->
+ </tr>
+ </table>
+<table align="center">
+<tr algin="center">
+<td align="center">
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/229658/charts/1?bgcolor=%23ffffff&color=%231a75ff&dynamic=true&results=60&title=Drsite&type=line&yaxis=temp+%28+c+%29"></iframe>
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/228395/charts/1?bgcolor=%23ffffff&color=%231a75ff&dynamic=true&results=60&type=line&yaxis=temp+%28+c+%29"></iframe>
+
+<!-- <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/239076/charts/2?bgcolor=%23ffffff&color=%231a75ff&dynamic=true&results=60&title=Humidity_Dr&type=line"></iframe> -->
+
+	</td>
+ </tr>
+ </table>
+
+<h2 align="center">Internet Bandwidth Usage</h2>
+<table align="center">
+<tr algin="center">
+<td align="center">
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/242107/charts/1?bgcolor=%23ffffff&color=%231a75ff&dynamic=true&results=60&title=Bandwidth+%28MB%29&type=line"></iframe>
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/242107/charts/2?bgcolor=%23ffffff&color=%231a75ff&dynamic=true&results=60&title=User&type=line"></iframe>
+<!-- <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/239076/charts/2?bgcolor=%23ffffff&color=%231a75ff&dynamic=true&results=60&title=Humidity_Dr&type=line"></iframe> -->
+
+	</td>
+ </tr>
+ </table>
+
+
+<!--
+<h2 align="center"> Humidity Server Room</h2>
+<table align="center">
+<tr algin="center">
+<td align="center">
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/239076/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Humidity_Dr&type=line"></iframe>
+
+	</td>
+ </tr>
+ </table>
+-->
+
+<h3 align="center"> IP 10.156.2.52 (Linux)</h3>
+<table align="center">
+<tr algin="center">
+<td align="center">
+ <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/237324/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=CPU+%28+%25+%29&type=line&yaxis=cpu+%28%25%29"></iframe>
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/237324/charts/4?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Memory+%28+%25+%29&type=line"></iframe>
+
+
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/237324/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&max=40&results=60&title=Disk+Usage+%28+33+GB%29&type=line&yaxis=Disk+%28GB%29"></iframe>
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/237324/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Memory+%28+4192+MB%29&type=line&yaxis=memory+%28+MB%29"></iframe>
+
+	</td>
+ </tr>
+ </table>
+
+
+<h3 align="center"> IP 10.152.7.245 (Linux) </h3>
+<table align="center">
+<tr algin="center">
+<td align="center">
+ <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/238070/charts/1?bgcolor=%23ffffff&color=%23009900&dynamic=true&results=60&title=CPU+%28+%25+%29&type=line"></iframe>
+
+ <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/238070/charts/4?bgcolor=%23ffffff&color=%23009900&dynamic=true&results=60&title=Memory+%28+%25+%29&type=line"></iframe>
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/238070/charts/3?bgcolor=%23ffffff&color=%23009900&dynamic=true&results=60&title=Disk+Usage&type=line"></iframe>
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/238070/charts/2?bgcolor=%23ffffff&color=%23009900&dynamic=true&results=60&title=Memory&type=line"></iframe>
+
+	</td>
+ </tr>
+ </table>
+
+ <h3 align="center"> IP 10.152.7.213 (Windows Server )</h3>
+<table align="center">
+<tr algin="center">
+<td align="center">
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/238124/charts/1?bgcolor=%23ffffff&color=%23ffaa00&dynamic=true&results=60&title=CPU+%28+%25+%29&type=line"></iframe>
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/238124/charts/4?bgcolor=%23ffffff&color=%23ffaa00&dynamic=true&results=60&title=Memory+%28+%25+%29&type=line"></iframe>
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/238124/charts/3?bgcolor=%23ffffff&color=%23ffaa00&dynamic=true&results=60&title=Disk+Usage+%28+%25+%29&type=line"></iframe>
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/238124/charts/2?bgcolor=%23ffffff&color=%23ffaa00&dynamic=true&results=60&title=Memory&type=line"></iframe>
+
+
+	</td>
+ </tr>
+ </table>
+
+ <h3 align="center"> IP 10.155.1.2 (Dynosour)</h3>
+<table align="center">
+<tr algin="center">
+<td align="center">
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/238590/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=CPU+%28+%25+%29&type=line"></iframe>
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/238590/charts/4?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Memory+%28+%25+%29&type=line"></iframe>
+
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/238590/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Disk+%28+%25+%29&type=line"></iframe>
+
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/238590/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Memory&type=line"></iframe>
+
+
+	</td>
+ </tr>
+ </table>
+
+ <h3 align="center"> IP 10.175.1.2 (Dynosour)</h3>
+<table align="center">
+<tr algin="center">
+<td align="center">
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/239480/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=CPU+%28+%25+%29&type=line"></iframe>
+
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/239480/charts/4?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Memory+%28+%25+%29&type=line"></iframe>
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/239480/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Disk+%28+%25+%29&type=line"></iframe>
+
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/239480/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Memory&type=line"></iframe>
+
+
+
+	</td>
+ </tr>
+ </table>
+
+
+
+<h3 align="center"> IP 10.156.2.150 (Dynosour)</h3>
+<table align="center">
+<tr algin="center">
+<td align="center">
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/239498/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=CPU+%28+%25+%29&type=line"></iframe>
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/239498/charts/4?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=MEMORY+%28+%25+%29&type=line"></iframe>
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/239498/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=DISK+%28+%25+%29&type=line"></iframe>
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/239498/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=MEMORY+&type=line"></iframe>
+
+
+	</td>
+ </tr>
+ </table>
+
+<h3 align="center"> IP 172.17.1.136 (Dynosour Extern)</h3>
+<table align="center">
+<tr algin="center">
+<td align="center">
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/240406/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=CPU+%28+%25+%29&type=line"></iframe>
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/240406/charts/4?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Memory+%28+%25+%29&type=line"></iframe>
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/240406/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Disk+%28+%25+%29&type=line"></iframe>
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/240406/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Memory&type=line"></iframe>
+
+
+
+	</td>
+ </tr>
+ </table>
+
+
+ <h3 align="center"> IP 172.17.1.240 (Dynosour Exstream)</h3>
+<table align="center">
+<tr algin="center">
+<td align="center">
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/240413/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=CPU+%28+%2A+%29&type=line"></iframe>
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/240413/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Memory&type=line"></iframe>
+
+<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/240413/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Disk+%28+%25+%29&type=line"></iframe>
+
+
+
+
+
+	</td>
+ </tr>
+ </table>
+
+
+
+
+
+
+
+
+
+</BODY>
+</HTML>
